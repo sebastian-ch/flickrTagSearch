@@ -1,0 +1,44 @@
+.leaflet-marker-photo { 
+	border: 2px solid #fff; 
+	box-shadow: 3px 3px 10px #888; 
+}	
+
+.leaflet-marker-photo div { 
+    width: 100%;  
+    height: 100%;
+    background-size: cover;    
+    background-position: center center;
+    background-repeat: no-repeat;
+}	
+
+.leaflet-marker-photo b {
+	position: absolute;
+	top: -7px;
+	right: -11px;
+	color: #555;
+	background-color: #fff;
+	border-radius: 8px;
+	height: 12px;
+	min-width: 12px;
+	line-height: 12px;
+	text-align: center;
+	padding: 3px;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+}
+
+/*added markercluster.css to here cause it was small */
+
+.leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
+	-webkit-transition: -webkit-transform 0.3s ease-out, opacity 0.3s ease-in;
+	-moz-transition: -moz-transform 0.3s ease-out, opacity 0.3s ease-in;
+	-o-transition: -o-transform 0.3s ease-out, opacity 0.3s ease-in;
+	transition: transform 0.3s ease-out, opacity 0.3s ease-in;
+}
+
+.leaflet-cluster-spider-leg {
+	/* stroke-dashoffset (duration and function) should match with leaflet-marker-icon transform in order to track it exactly */
+	-webkit-transition: -webkit-stroke-dashoffset 0.3s ease-out, -webkit-stroke-opacity 0.3s ease-in;
+	-moz-transition: -moz-stroke-dashoffset 0.3s ease-out, -moz-stroke-opacity 0.3s ease-in;
+	-o-transition: -o-stroke-dashoffset 0.3s ease-out, -o-stroke-opacity 0.3s ease-in;
+	transition: stroke-dashoffset 0.3s ease-out, stroke-opacity 0.3s ease-in;
+}

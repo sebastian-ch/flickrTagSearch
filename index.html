@@ -1,0 +1,37 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="camera.ico" />
+    <title>Flickr Tag Search</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="libs/Leaflet.Photo.css" />
+    <link rel="stylesheet" href="libs/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="libs/mystyle.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id='sidebar'>
+        <h4>Search flickr tags to see geolocated photos</h4>
+        <h5>Returns a max of 250 photos.</h5>
+        <input type="text" id='input' name="tags" placeholder="Search for tags!">
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="libs/leaflet.markercluster.js"></script>
+    <script src="libs/Leaflet.Photo.js"></script>
+    <script src="libs/app.js"></script>
+
+    
+</body>
+
+</html>
