@@ -33,12 +33,12 @@
  var bboxLayer = new L.FeatureGroup();
  map.addLayer(bboxLayer);
 
- var drawControl = new L.Control.Draw({
+ /*var drawControl = new L.Control.Draw({
      edit: {
          featureGroup: drawnItems
      }
  });
- map.addControl(drawControl);
+ map.addControl(drawControl); */
 
  var photoLayer = L.photo.cluster().on('click', function (evt) {
 
