@@ -30,15 +30,54 @@
          pane: 'labels'
      }).addTo(map);
 
- var bboxLayer = new L.FeatureGroup();
- map.addLayer(bboxLayer);
 
- /*var drawControl = new L.Control.Draw({
+ var flickrBoundingBox;
+
+ var drawnItems = new L.FeatureGroup();
+ map.addLayer(drawnItems);
+
+ var drawControl = new L.Control.Draw({
+     draw: {
+         marker: false,
+         circle: false,
+         polygon: false,
+         circlemarker: false,
+         polyline: false,
+
+     },
      edit: {
          featureGroup: drawnItems
      }
  });
- map.addControl(drawControl); */
+
+ var drawControlEdit = new L.Control.Draw({
+     draw: false,
+     edit: {
+        featureGroup: drawnItems
+     }
+ })
+
+
+ map.addControl(drawControl);
+
+ map.on(L.Draw.Event.CREATED, function (event) {
+     var layer = event.layer;
+
+     drawnItems.addLayer(layer);
+     console.log(layer.getBounds());
+
+     map.removeControl(drawControl)
+     map.addControl(drawControlEdit);
+
+ });
+
+
+ map.on(L.Draw.Event.DELETED, function(event) {
+    map.removeControl(drawControlEdit)
+    map.addControl(drawControl);
+
+ })
+
 
  var photoLayer = L.photo.cluster().on('click', function (evt) {
 
@@ -53,6 +92,8 @@
      }).openPopup();
  });
 
+
+
  var input = document.getElementById("input");
  input.addEventListener("keyup", function (event) {
      if (event.keyCode === 13) {
@@ -61,11 +102,19 @@
      }
  })
 
+ function removePhotoLayer() {
+
+     photoLayer.clear();
+     map.removeLayer(photoLayer);
+     input.value = ''
+
+
+ }
+
 
  function searchForTags() {
 
      photoLayer.clearLayers();
-     map.removeLayer(photoLayer);
 
      var flickrKey = '&api_key=e4dd71a1bf7d41f467b8dc7aa8e987fd',
          userID = '&user_id=153002014@N03',
@@ -76,15 +125,14 @@
 
      //console.log(flickrGetPhotoData);
      searchForData(flickrGetPhotoData);
-     //console.log(input.value);
+
  }
 
 
 
- //flickr API stuff
-
-
  function searchForData(searchString) {
+
+     console.log(searchString)
      d3.json(searchString, {
          crossOrigin: "anonymous"
      }).then(function (data) {
@@ -95,7 +143,9 @@
 
 
  function organizePhotos(data) {
+
      var allPhotos = [];
+     allPhotos.length = 0;
 
      data.photo.forEach(function (pic) {
 
@@ -114,18 +164,13 @@
          });
      })
 
+
      mapPhotos(allPhotos);
  }
 
 
  function mapPhotos(allPhotos) {
 
-
-     console.log(allPhotos)
      photoLayer.add(allPhotos).addTo(map);
-
-
-     //map.setView(photoLayer.getBounds().getCenter(), 14)
-
 
  }

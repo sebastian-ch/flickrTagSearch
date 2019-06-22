@@ -1,5 +1,5 @@
 body {
-    font-family: 'Barlow', sans-serif; 
+    font-family: 'Barlow', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -8,8 +8,23 @@ h4 {
     margin-bottom: 0;
     padding-bottom: 0;
 }
+
 h5 {
     margin: 2px;
+}
+
+button {
+    text-align: center;
+    border: 2px  solid black;
+    padding: 15px 32px;
+    text-decoration: none;
+    color: black;
+
+}
+
+button:hover {
+    opacity: 0.5;
+    cursor: pointer;
 }
 
 #sidebar {
@@ -17,7 +32,7 @@ h5 {
     top: 8%;
     left: 5%;
     width: 400px;
-    height: 130px;
+    height: 170px;
     position: absolute;
     text-align: center;
     z-index: 1000;
@@ -31,7 +46,7 @@ h5 {
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
-   
+
 }
 
 
