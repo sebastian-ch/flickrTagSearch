@@ -31,7 +31,7 @@
      }).addTo(map);
 
 
- var flickrBoundingBox;
+ var flickrBoundingBox = '-90,-180,90,180';
  var drawnItems = new L.FeatureGroup();
  map.addLayer(drawnItems);
 
@@ -89,7 +89,7 @@
 
      map.removeControl(drawControlEdit)
      map.addControl(drawControl);
-     flickrBoundingBox = '';
+     flickrBoundingBox = '-90,-180,90,180';
 
  })
 
@@ -132,11 +132,7 @@
      map.removeLayer(photoLayer);
      input.value = ''
 
-
      map.setView([37.392, -14.855], 2.6);
-
-     // drawnItems.clearLayers();
-     // map.removeLayer(drawnItems);
 
 
  }
@@ -154,11 +150,11 @@
          flickrGetPhotoData = flickrStart + 'flickr.photos.search' + flickrKey + tags + flickrFormat,
          getPhotosWithBbox = flickrStart + 'flickr.photos.search' + flickrKey + tags + flickrBoundingBox + flickrFormat;
 
-         if (flickrBoundingBox != '') {
+       
              searchForData(getPhotosWithBbox);
-         } else {
-            searchForData(flickrGetPhotoData);
-         }
+     
+            //searchForData(flickrGetPhotoData);
+         
 
  }
 
