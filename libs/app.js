@@ -32,7 +32,6 @@
 
 
  var flickrBoundingBox;
-
  var drawnItems = new L.FeatureGroup();
  map.addLayer(drawnItems);
 
@@ -43,6 +42,14 @@
          polygon: false,
          circlemarker: false,
          polyline: false,
+         rectangle: {
+             shapeOptions: {
+                 weight: 3,
+                 color: 'black',
+                 fillOpacity: 0,
+                 opacity: 1.0
+             }
+         }
 
      },
      edit: {
@@ -53,7 +60,7 @@
  var drawControlEdit = new L.Control.Draw({
      draw: false,
      edit: {
-        featureGroup: drawnItems
+         featureGroup: drawnItems
      }
  })
 
@@ -64,17 +71,35 @@
      var layer = event.layer;
 
      drawnItems.addLayer(layer);
-     console.log(layer.getBounds());
+     flickrBoundingBox = '&bbox=' + layer.getBounds().toBBoxString();
+     console.log(layer.getBounds().toBBoxString());
 
      map.removeControl(drawControl)
      map.addControl(drawControlEdit);
 
+     map.flyToBounds(layer.getBounds(), {
+         padding: [80, 80],
+         duration: 0.4
+     })
+
  });
 
 
- map.on(L.Draw.Event.DELETED, function(event) {
-    map.removeControl(drawControlEdit)
-    map.addControl(drawControl);
+ map.on(L.Draw.Event.DELETED, function (event) {
+
+     map.removeControl(drawControlEdit)
+     map.addControl(drawControl);
+     flickrBoundingBox = '';
+
+ })
+
+ map.on(L.Draw.Event.EDITED, function (event) {
+     var layer = event.layers;
+
+     for (var x in layer._layers) {
+         flickrBoundingBox = '&bbox=' + layer._layers[x]._bounds.toBBoxString();
+         console.log(layer._layers[x]._bounds.toBBoxString());
+     }
 
  })
 
@@ -93,7 +118,6 @@
  });
 
 
-
  var input = document.getElementById("input");
  input.addEventListener("keyup", function (event) {
      if (event.keyCode === 13) {
@@ -109,6 +133,12 @@
      input.value = ''
 
 
+     map.setView([37.392, -14.855], 2.6);
+
+     // drawnItems.clearLayers();
+     // map.removeLayer(drawnItems);
+
+
  }
 
 
@@ -118,13 +148,17 @@
 
      var flickrKey = '&api_key=e4dd71a1bf7d41f467b8dc7aa8e987fd',
          userID = '&user_id=153002014@N03',
-         tags = '&tags=' + input.value.toString();
-     flickrStart = "https://api.flickr.com/services/rest/?method=",
+         tags = '&tags=' + input.value.toString(),
+         flickrStart = "https://api.flickr.com/services/rest/?method=",
          flickrFormat = "&extras=media,date_taken,geo,url_n,url_o&format=json&has_geo=1&nojsoncallback=1",
-         flickrGetPhotoData = flickrStart + 'flickr.photos.search' + flickrKey + tags + flickrFormat;
+         flickrGetPhotoData = flickrStart + 'flickr.photos.search' + flickrKey + tags + flickrFormat,
+         getPhotosWithBbox = flickrStart + 'flickr.photos.search' + flickrKey + tags + flickrBoundingBox + flickrFormat;
 
-     //console.log(flickrGetPhotoData);
-     searchForData(flickrGetPhotoData);
+         if (flickrBoundingBox != '') {
+             searchForData(getPhotosWithBbox);
+         } else {
+            searchForData(flickrGetPhotoData);
+         }
 
  }
 
