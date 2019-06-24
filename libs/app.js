@@ -108,7 +108,7 @@
 
      var photo = evt.layer.photo,
          template =
-         '<img src="{thumbnail}"/></a><p><b>{parsedDate}</b></p><br><a href="{fullPic}" targer="_blank"><b>Full Image</b></a>';
+         '<img src="{thumbnail}"/></a><p><b>{parsedDate}</b></p><br><a href="{fullPic}" target="_blank"><b>Full Image</b></a>';
 
      evt.layer.bindPopup(L.Util.template(template, photo), {
          className: 'leaflet-popup-photo',
@@ -149,15 +149,10 @@
          flickrGetPhotoData = flickrStart + 'flickr.photos.search' + flickrKey + tags + flickrFormat,
          getPhotosWithBbox = flickrStart + 'flickr.photos.search' + flickrKey + tags + flickrBoundingBox + flickrFormat;
 
-       
-             searchForData(getPhotosWithBbox);
-     
-            //searchForData(flickrGetPhotoData);
-         
+
+     searchForData(getPhotosWithBbox);
 
  }
-
-
 
  function searchForData(searchString) {
 
@@ -172,7 +167,7 @@
 
 
  function organizePhotos(data) {
-   
+
      var allPhotos = [];
      allPhotos.length = 0;
 
